@@ -5,6 +5,14 @@ import PackageDescription
 
 let package = Package(
     name: "Synopsis",
+    products: [
+        .library(
+            name: "Synopsis",
+            targets: [
+                "Synopsis"
+            ]
+        ),
+    ],
     dependencies: [
         .package(
             url: "https://github.com/Incetro/source-kitten-adapter",
