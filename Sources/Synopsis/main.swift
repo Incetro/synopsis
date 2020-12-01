@@ -2,6 +2,8 @@ import source_kitten_adapter
 import ArgumentParser
 import Foundation
 
+// MARK: - Analyze
+
 struct Analyze: ParsableCommand {
 
     @Argument(help: "path to source code")
