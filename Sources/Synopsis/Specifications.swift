@@ -34,7 +34,7 @@ public struct Specifications {
     // MARK: - Consolidation
 
     /// Enums which are consolidated with their extensions
-    var consolidatedEnums: [EnumSpecification: [ExtensionSpecification]] {
+    public var consolidatedEnums: [EnumSpecification: [ExtensionSpecification]] {
         var consolidated: [EnumSpecification: [ExtensionSpecification]] = [:]
         for `enum` in enums {
             consolidated[`enum`] = extensions.filter { $0.name == `enum`.name }
@@ -43,7 +43,7 @@ public struct Specifications {
     }
 
     /// Protocols which are consolidated with their extensions
-    var consolidatedProtocols: [ProtocolSpecification: [ExtensionSpecification]] {
+    public var consolidatedProtocols: [ProtocolSpecification: [ExtensionSpecification]] {
         var consolidated: [ProtocolSpecification: [ExtensionSpecification]] = [:]
         for `protocol` in protocols {
             consolidated[`protocol`] = extensions.filter { $0.name == `protocol`.name }
@@ -52,7 +52,7 @@ public struct Specifications {
     }
 
     /// Structures which are consolidated with their extensions
-    var consolidatedStructures: [StructureSpecification: [ExtensionSpecification]] {
+    public var consolidatedStructures: [StructureSpecification: [ExtensionSpecification]] {
         var consolidated: [StructureSpecification: [ExtensionSpecification]] = [:]
         for structure in structures {
             consolidated[structure] = extensions.filter { $0.name == structure.name }
@@ -61,7 +61,7 @@ public struct Specifications {
     }
 
     /// Classes which are consolidated with their extensions
-    var consolidatedClasses: [ClassSpecification: [ExtensionSpecification]] {
+    public var consolidatedClasses: [ClassSpecification: [ExtensionSpecification]] {
         var consolidated: [ClassSpecification: [ExtensionSpecification]] = [:]
         for `class` in classes {
             consolidated[`class`] = extensions.filter { $0.name == `class`.name }

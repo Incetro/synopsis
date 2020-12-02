@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - String
 
-extension String {
+public extension String {
 
     func detectInlineComment(startingAt index: String.Index) -> Bool {
         self[index...].hasPrefix("///")
@@ -114,7 +114,7 @@ extension String {
 
 // MARK: - Substring
 
-extension Substring {
+public extension Substring {
 
     func detectInlineComment(startingAt index: String.Index) -> Bool {
         self[index...].hasPrefix("///")
