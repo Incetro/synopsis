@@ -26,7 +26,7 @@ public final class SourceKittenCodeProvider {
     }
 
     /// Default initializer
-    convenience init() {
+    public convenience init() {
         self.init(sourceKittenAdapter: SourceKittenAdapterImplementation())
     }
 }
