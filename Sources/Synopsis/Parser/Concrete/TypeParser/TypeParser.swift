@@ -106,7 +106,7 @@ final class TypeParser {
             return .void
         }
 
-        var objectTypeName = String(rawType.firstWord())
+        var objectTypeName = rawType.contains("inout ") ? rawType : String(rawType.firstWord())
         if objectTypeName.last == "?" {
             objectTypeName = String(objectTypeName.dropLast())
         }

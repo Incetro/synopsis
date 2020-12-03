@@ -153,7 +153,7 @@ extension StructureSpecification {
             }
 
         return "\(structureMarkStr)\(commentStr)"
-             + "\(accessibilityStr)struct \(name)\(inheritedTypesStr)"
+             + "\(accessibilityStr)struct \(name)\(inheritedTypesStr) "
              + "{\n\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
     }
 }

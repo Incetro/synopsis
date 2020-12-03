@@ -102,7 +102,7 @@ final class PropertyParser {
                 let comment = rawPropertyDescription.comment
                 let annotations = comment.map { AnnotationParser().parse(comment: $0) } ?? []
                 let accessibility = AccessibilitySpecification.deduce(forRawStructureElement: rawPropertyDescription)
-                let constant = parsedDeclaration.contains("let ")
+                let declarationKind = PropertySpecification.DeclarationKind.deduce(forPropertyDeclaration: parsedDeclaration)
                 let name = rawPropertyDescription.name
                 let type = TypeParser().parse(rawDescription: rawPropertyDescription)
                 let defaultValue = getDefaultValue(fromParsedDeclaration: parsedDeclaration)
@@ -121,7 +121,7 @@ final class PropertyParser {
                     comment: comment,
                     annotations: annotations,
                     accessibility: accessibility,
-                    constant: constant,
+                    declarationKind: declarationKind,
                     name: name,
                     type: type,
                     defaultValue: defaultValue,

@@ -207,13 +207,19 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
         let commentStr       = comment.map { $0.isEmpty ? "" : $0.prefixEachLine(with: "/// ") + "\n" } ?? ""
         let openBraceIndex   = name.firstIndex(of: "(").unwrap()
         let accessibilityStr = accessibility.verse.isEmpty ? "" : "\(accessibility.verse) "
-        let attributesStr    = attributes.filter { [.override, .mutating].contains($0) }.map(\.verse).joined(separator: " ")
+        let attributesStr    = attributes
+            .sorted { $0.priority > $1.priority }
+            .filter { [.discardableResult, .override, .mutating].contains($0) }
+            .map(\.verse)
+            .joined(separator: " ")
         let funcStr          = (attributesStr.isEmpty ? "" : " ") + "func "
         let nameStr          = name[..<openBraceIndex]
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
         let returnTypeStr    = returnType.map { $0 == .void ? "" : " -> \($0.verse)" } ?? ""
         let bodyStr          = body.map {
-            $0.isEmpty ? " {}" : " {\n    \($0.truncateLeadingWhitespace())}".replacingOccurrences(of: "}}", with: "}")
+            $0.isEmpty
+                ? " {}"
+                : " {\n    \($0.truncateLeadingWhitespace())}".replacingOccurrences(of: "}}", with: "}")
         } ?? ""
 
         let argumentsStr: String

@@ -23,9 +23,12 @@ public struct PropertySpecification {
     /// Access visibility
     public let accessibility: AccessibilitySpecification
 
-    /// True if property is `let`
-    /// Otherwise (if `var`) true
-    public let constant: Bool
+    /// DeclarationKind value
+    /// Supported kinds:
+    ///     `private(set) var`
+    ///     `let`
+    ///     `var`
+    public let declarationKind: DeclarationKind
 
     /// Property name
     public let name: String
@@ -63,7 +66,7 @@ public struct PropertySpecification {
         comment: String?,
         annotations: [AnnotationSpecification],
         accessibility: AccessibilitySpecification,
-        constant: Bool,
+        declarationKind: DeclarationKind,
         name: String,
         type: TypeSpecification,
         defaultValue: String?,
@@ -71,16 +74,16 @@ public struct PropertySpecification {
         kind: Kind,
         body: String?
     ) {
-        self.comment       = comment
-        self.annotations   = annotations
-        self.accessibility = accessibility
-        self.constant      = constant
-        self.name          = name
-        self.type          = type
-        self.defaultValue  = defaultValue
-        self.declaration   = declaration
-        self.kind          = kind
-        self.body          = body
+        self.comment         = comment
+        self.annotations     = annotations
+        self.accessibility   = accessibility
+        self.declarationKind = declarationKind
+        self.name            = name
+        self.type            = type
+        self.defaultValue    = defaultValue
+        self.declaration     = declaration
+        self.kind            = kind
+        self.body            = body
     }
 
     // MARK: - Template
@@ -98,7 +101,7 @@ public struct PropertySpecification {
     public static func template(
         comment: String?,
         accessibility: AccessibilitySpecification,
-        constant: Bool,
+        declarationKind: DeclarationKind,
         name: String,
         type: TypeSpecification,
         defaultValue: String?,
@@ -109,7 +112,7 @@ public struct PropertySpecification {
             comment: comment,
             annotations: [],
             accessibility: accessibility,
-            constant: constant,
+            declarationKind: declarationKind,
             name: name,
             type: type,
             defaultValue: defaultValue,
@@ -140,6 +143,37 @@ public struct PropertySpecification {
 
         /// TODO: support global, local & parameter kinds
     }
+
+    // MARK: - DeclarationKind
+
+    public enum DeclarationKind: String {
+
+        /// let num = 10
+        case `let` = "let"
+
+        /// var num = 10
+        case `var` = "var"
+
+        /// private(set) var num = 10
+        case privateSet = "private(set) var"
+
+        // MARK: - Static
+
+        /// Obtains accessibility level
+        /// from a raw structure element
+        /// - Parameter element: some structure element
+        /// - Returns: result accessibility level
+        static func deduce(
+            forPropertyDeclaration declaration: String
+        ) -> DeclarationKind {
+            if declaration.contains("let ") {
+                return .let
+            } else if declaration.contains("private(set) var ") {
+                return .privateSet
+            }
+            return .var
+        }
+    }
 }
 
 // MARK: - Sequence
@@ -163,7 +197,7 @@ extension PropertySpecification: Equatable {
         return left.comment         == right.comment
             && left.annotations     == right.annotations
             && left.accessibility   == right.accessibility
-            && left.constant        == right.constant
+            && left.declarationKind == right.declarationKind
             && left.name            == right.name
             && left.type            == right.type
             && left.defaultValue    == right.defaultValue
@@ -178,7 +212,7 @@ extension PropertySpecification: Equatable {
 extension PropertySpecification: CustomDebugStringConvertible {
 
     public var debugDescription: String {
-        "PROPERTY: name = \(name); type = \(type); constant = \(constant)"
+        "PROPERTY: name = \(name); type = \(type); declarationKind = \(declarationKind)"
     }
 }
 
@@ -198,7 +232,7 @@ extension PropertySpecification: Specification {
 
         let accessibilityStr = accessibility.verse.isEmpty ? "" : "\(accessibility.verse) "
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
-        let constantStr      = constant ? "let" : "var"
+        let constantStr      = declarationKind.rawValue
         let bodyStr          = body.map { " {\n\($0.unindent)\n}" } ?? ""
         let defaultValueStr  = defaultValue.map { " = \($0)" } ?? ""
 
