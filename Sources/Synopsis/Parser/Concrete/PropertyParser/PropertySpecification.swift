@@ -157,6 +157,9 @@ public struct PropertySpecification {
         /// private(set) var num = 10
         case privateSet = "private(set) var"
 
+        /// private(set) var num = 10
+        case objcDynamicVar = "@objc dynamic var "
+
         // MARK: - Static
 
         /// Obtains accessibility level
@@ -170,6 +173,8 @@ public struct PropertySpecification {
                 return .let
             } else if declaration.contains("private(set) var ") {
                 return .privateSet
+            } else if declaration.contains("@objc dynamic var ") {
+                return .objcDynamicVar
             }
             return .var
         }
