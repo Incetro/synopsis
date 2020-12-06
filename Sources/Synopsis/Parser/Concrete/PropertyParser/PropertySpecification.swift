@@ -25,6 +25,7 @@ public struct PropertySpecification {
 
     /// DeclarationKind value
     /// Supported kinds:
+    ///     `@objc dynamic var`
     ///     `private(set) var`
     ///     `let`
     ///     `var`

@@ -16,8 +16,7 @@ public struct EnumSpecification {
     /// Enum comment value
     public let comment: String?
 
-    /// Enum annotations.
-    /// Enum annotations are located inside
+    /// Enum annotations which are located inside
     /// the block comment above the enum declaration.
     public let annotations: [AnnotationSpecification]
 

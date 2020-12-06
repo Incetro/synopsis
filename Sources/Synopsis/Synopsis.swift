@@ -44,6 +44,12 @@ public final class Synopsis<Provider: SourceCodeProvider> {
         self.sourceCodeProvider = sourceCodeProvider
     }
 
+    // MARK: - Static
+
+    public static var `default`: Synopsis<SourceKittenCodeProvider> {
+        Synopsis<SourceKittenCodeProvider>(sourceCodeProvider: SourceKittenCodeProvider())
+    }
+
     // MARK: - Useful
 
     /// Returns specifications for the given urls
