@@ -49,6 +49,14 @@ public struct PropertySpecification {
     /// Getters, setters, didSetters, willSetters etc.
     public let body: String?
 
+    /// True if we can skip type declaration.
+    /// Example:
+    /// ```
+    /// let num: Int = 10 transforms to let num = 10
+    /// let object: Object = Object() transforms to let object = Object()
+    /// ```
+    private let skippingTypeDeclaration: Bool
+
     // MARK: - Initializers
 
     /// Default initializer
@@ -75,16 +83,17 @@ public struct PropertySpecification {
         kind: Kind,
         body: String?
     ) {
-        self.comment         = comment
-        self.annotations     = annotations
-        self.accessibility   = accessibility
-        self.declarationKind = declarationKind
-        self.name            = name
-        self.type            = type
-        self.defaultValue    = defaultValue
-        self.declaration     = declaration
-        self.kind            = kind
-        self.body            = body
+        self.comment                 = comment
+        self.annotations             = annotations
+        self.accessibility           = accessibility
+        self.declarationKind         = declarationKind
+        self.name                    = name
+        self.type                    = type
+        self.defaultValue            = defaultValue
+        self.declaration             = declaration
+        self.kind                    = kind
+        self.body                    = body
+        self.skippingTypeDeclaration = false
     }
 
     // MARK: - Template
@@ -106,6 +115,7 @@ public struct PropertySpecification {
         name: String,
         type: TypeSpecification,
         defaultValue: String?,
+        skippingTypeDeclaration: Bool = false,
         kind: Kind,
         body: String?
     ) -> PropertySpecification {
@@ -242,8 +252,14 @@ extension PropertySpecification: Specification {
         let bodyStr          = body.map { " {\n\($0.unindent)\n}" } ?? ""
         let defaultValueStr  = defaultValue.map { " = \($0)" } ?? ""
 
-        return """
-        \(commentStr)\(accessibilityStr)\(kindStr)\(constantStr) \(name): \(type.verse)\(defaultValueStr)\(bodyStr)
-        """
+        if skippingTypeDeclaration, !defaultValueStr.isEmpty {
+            return """
+            \(commentStr)\(accessibilityStr)\(kindStr)\(constantStr) \(name)\(defaultValueStr)\(bodyStr)
+            """
+        } else {
+            return """
+            \(commentStr)\(accessibilityStr)\(kindStr)\(constantStr) \(name): \(type.verse)\(defaultValueStr)\(bodyStr)
+            """
+        }
     }
 }
