@@ -60,7 +60,7 @@ public indirect enum TypeSpecification {
     case generic(name: String, constraints: [TypeSpecification])
 
     /// Returns current type as non-optional type
-    var unwrapped: TypeSpecification {
+    public var unwrapped: TypeSpecification {
         switch self {
         case .optional(wrapped: let type):
             return type.unwrapped
