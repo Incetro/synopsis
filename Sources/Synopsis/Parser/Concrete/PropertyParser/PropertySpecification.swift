@@ -81,7 +81,8 @@ public struct PropertySpecification {
         defaultValue: String?,
         declaration: Declaration,
         kind: Kind,
-        body: String?
+        body: String?,
+        skippingTypeDeclaration: Bool = false
     ) {
         self.comment                 = comment
         self.annotations             = annotations
@@ -93,7 +94,7 @@ public struct PropertySpecification {
         self.declaration             = declaration
         self.kind                    = kind
         self.body                    = body
-        self.skippingTypeDeclaration = false
+        self.skippingTypeDeclaration = skippingTypeDeclaration
     }
 
     // MARK: - Template
@@ -129,7 +130,8 @@ public struct PropertySpecification {
             defaultValue: defaultValue,
             declaration: Declaration.mock,
             kind: kind,
-            body: body
+            body: body,
+            skippingTypeDeclaration: skippingTypeDeclaration
         )
     }
 
