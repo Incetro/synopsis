@@ -67,7 +67,7 @@ public class FunctionParser<S: SourceCode, Function: FunctionSpecification> {
         let returnType = TypeParser().parse(functionTypename: typename, declarationString: declarationString)
         let kind = getKind(rawFunctionDescription: rawStructureElements)
         let body = getBody(rawFunctionDescription: rawStructureElements, withContent: content)
-        let arguments = ArgumentParser().parse(functionParsedDeclaration: declarationString)
+        let arguments = ArgumentsParser().parse(functionParsedDeclaration: declarationString)
 
         let declaration = Declaration(
             filePath: fileURL,

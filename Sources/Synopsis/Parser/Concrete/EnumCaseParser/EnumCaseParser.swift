@@ -102,7 +102,7 @@ extension EnumCaseParser {
                     : enumCaseElement.structure.name
                 let defaultValue = getDefaultValue(fromParsedDeclaration: parsedDeclaration)
                 let arguments = containsArguments
-                    ? ArgumentParser().parse(functionParsedDeclaration: parsedDeclaration)
+                    ? ArgumentsParser().parse(functionParsedDeclaration: parsedDeclaration)
                     : []
 
                 let declaration = Declaration(

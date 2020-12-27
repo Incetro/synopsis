@@ -10,7 +10,7 @@ import Foundation
 // MARK: - ArgumentParser
 
 /// Method arguments' parser
-public final class ArgumentParser {
+public final class ArgumentsParser {
 
     // MARK: - Useful
 
