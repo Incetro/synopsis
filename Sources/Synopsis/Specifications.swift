@@ -69,3 +69,72 @@ public struct Specifications {
         return consolidated
     }
 }
+
+// MARK: - Xcode
+
+public extension Specifications {
+
+    func printToXcode() {
+        let messages = [
+            extensibleMessages(extensibles: classes),
+            extensibleMessages(extensibles: structures),
+            extensibleMessages(extensibles: protocols),
+            extensibleMessages(extensibles: extensions)
+        ].flatMap { $0 }
+        messages.forEach { print($0) }
+    }
+
+    // MARK: - Private
+
+    private func extensibleMessages<E: ExtensibleSpecification>(extensibles: [E]) -> [XcodeMessage] {
+        var messages: [XcodeMessage] = []
+        extensibles.forEach { (extensibleSpecification: E) in
+            messages.append(
+                XcodeMessage(
+                    declaration: extensibleSpecification.declaration,
+                    message: extensibleSpecification.debugDescription,
+                    type: .warning
+                )
+            )
+            extensibleSpecification.annotations.forEach { (annotation: AnnotationSpecification) in
+                messages.append(
+                    XcodeMessage(
+                        /// TODO: replace with Annotation.declaration
+                        declaration: extensibleSpecification.declaration,
+                        message: annotation.debugDescription,
+                        type: .warning
+                    )
+                )
+            }
+            extensibleSpecification.properties.forEach { (propertySpecification: PropertySpecification) in
+                messages.append(
+                    XcodeMessage(
+                        declaration: propertySpecification.declaration,
+                        message: propertySpecification.debugDescription,
+                        type: .warning
+                    )
+                )
+            }
+            extensibleSpecification.methods.forEach { (methodSpecification: MethodSpecification) in
+                messages.append(
+                    XcodeMessage(
+                        declaration: methodSpecification.declaration,
+                        message: methodSpecification.debugDescription,
+                        type: .warning
+                    )
+                )
+                methodSpecification.arguments.forEach { (argumentSpecification: ArgumentSpecification) in
+                    messages.append(
+                        XcodeMessage(
+                            /// TODO: replace with ArgumentDescription.declaration
+                            declaration: methodSpecification.declaration,
+                            message: argumentSpecification.debugDescription,
+                            type: .warning
+                        )
+                    )
+                }
+            }
+        }
+        return messages
+    }
+}

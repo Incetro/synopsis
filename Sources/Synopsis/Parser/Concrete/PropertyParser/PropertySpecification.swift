@@ -159,7 +159,7 @@ public struct PropertySpecification {
         case privateSet = "private(set) var"
 
         /// private(set) var num = 10
-        case objcDynamicVar = "@objc dynamic var "
+        case objcDynamicVar = "@objc dynamic var"
 
         // MARK: - Static
 

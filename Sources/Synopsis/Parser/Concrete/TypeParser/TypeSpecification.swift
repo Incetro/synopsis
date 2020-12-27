@@ -58,6 +58,16 @@ public indirect enum TypeSpecification {
     /// Like `object`, contains type name
     /// and also contains type for item in corner brakets
     case generic(name: String, constraints: [TypeSpecification])
+
+    /// Returns current type as non-optional type
+    var unwrapped: TypeSpecification {
+        switch self {
+        case .optional(wrapped: let type):
+            return type.unwrapped
+        default:
+            return self
+        }
+    }
 }
 
 // MARK: - CustomStringConvertible
