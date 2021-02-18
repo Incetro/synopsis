@@ -1,3 +1,5 @@
+![](synopsis.png)
+
 ## Description
 
 The package is designed to gather information from Swift source files and compile this information into concrete objects with
@@ -679,3 +681,10 @@ This allows to generate new source code by composing, e.g, `ClassSpecification` 
 Though, each `ClassSpecification ` instance requires a `Declaration`, which contains a `filePath`, `rawText`, `offset` and other properties yet to be defined, because such source code hasn't been generated yet.
 
 This is why `ClassSpecification` and others provide you with a `template(...)` constructor, which replaces declaration with a special mock object.
+
+
+## Authors
+
+incetro, incetro@ya.ru / andrew@incetro.ru
+
+Inspired by [RedMadRobot synopsis](https://github.com/RedMadRobot/synopsis)
