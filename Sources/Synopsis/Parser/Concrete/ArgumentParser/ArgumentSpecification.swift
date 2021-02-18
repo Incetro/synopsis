@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - ArgumentSpecification
 
-/// Method argument description
+/// Method argument specification
 public struct ArgumentSpecification {
 
     // MARK: - Properties

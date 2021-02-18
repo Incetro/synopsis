@@ -17,7 +17,7 @@ public final class EnumParser<S: SourceCode> {
     /// Checks if the given structure is an enum
     /// - Parameter element: some element structure
     /// - Returns: true if the given structure is an enum
-    private func isRawEnumDescription(_ element: Parameters) -> Bool {
+    private func isRawEnumSpecification(_ element: Parameters) -> Bool {
         SwiftDeclarationKind.`enum`.rawValue == element.kind
     }
 
@@ -27,7 +27,7 @@ public final class EnumParser<S: SourceCode> {
     private func parse(source: S) -> [EnumSpecification] {
         source
             .substructure
-            .filter(isRawEnumDescription)
+            .filter(isRawEnumSpecification)
             .map {
                 parse(
                     enumDictionary: $0,

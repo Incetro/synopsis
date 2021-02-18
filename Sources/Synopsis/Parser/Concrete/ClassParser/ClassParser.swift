@@ -12,7 +12,7 @@ import SourceKittenFramework
 
 public final class ClassParser<S: SourceCode>: ExtensibleParser<S, ClassSpecification> {
 
-    public override func isRawExtensibleDescription(_ element: Parameters) -> Bool {
+    public override func isRawExtensibleSpecification(_ element: Parameters) -> Bool {
         SwiftDeclarationKind.class.rawValue == element.kind
     }
 }

@@ -31,7 +31,7 @@ public final class EnumCaseParser {
     /// Checks if the given structure is an enum case
     /// - Parameter element: some element structure
     /// - Returns: true if the given structure is an enum case
-    private func isRawEnumCaseDescription(_ element: Parameters) -> Bool {
+    private func isRawEnumCaseSpecification(_ element: Parameters) -> Bool {
         SwiftDeclarationKind.enumcase.rawValue == element.kind
     }
 
@@ -75,7 +75,7 @@ extension EnumCaseParser {
         withContent content: String
     ) -> [EnumCaseSpecification] {
         structure
-            .filter(isRawEnumCaseDescription)
+            .filter(isRawEnumCaseSpecification)
             .flatMap { enumCaseDictionary in
                 /// Each enum case may contain multiple options:
                 ///

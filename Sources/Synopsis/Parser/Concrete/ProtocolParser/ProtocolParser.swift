@@ -12,7 +12,7 @@ import SourceKittenFramework
 
 public final class ProtocolParser<S: SourceCode>: ExtensibleParser<S, ProtocolSpecification> {
 
-    public override func isRawExtensibleDescription(_ element: Parameters) -> Bool {
+    public override func isRawExtensibleSpecification(_ element: Parameters) -> Bool {
         SwiftDeclarationKind.`protocol`.rawValue == element.kind
     }
 }

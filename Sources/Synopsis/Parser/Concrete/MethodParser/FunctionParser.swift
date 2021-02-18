@@ -17,7 +17,7 @@ public class FunctionParser<S: SourceCode, Function: FunctionSpecification> {
     /// Checks if the given structure is a function
     /// - Parameter element: some element structure
     /// - Returns: true if the given structure is a function
-    public func isRawFunctionDescription(_ element: Parameters) -> Bool {
+    public func isRawFunctionSpecification(_ element: Parameters) -> Bool {
         SwiftDeclarationKind.functionFree.rawValue == element.kind
     }
 
@@ -33,7 +33,7 @@ public class FunctionParser<S: SourceCode, Function: FunctionSpecification> {
         withContent content: String
     ) -> [Function] {
         rawStructureElements
-            .filter(isRawFunctionDescription)
+            .filter(isRawFunctionSpecification)
             .map {
                 parse(rawStructureElements: $0, forFileAt: fileURL, withContent: content)
             }
@@ -96,7 +96,7 @@ public class FunctionParser<S: SourceCode, Function: FunctionSpecification> {
     private func parse(source: S) -> [Function] {
         source
             .substructure
-            .filter(isRawFunctionDescription)
+            .filter(isRawFunctionSpecification)
             .map {
                 parse(
                     rawStructureElements: $0,

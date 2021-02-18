@@ -12,7 +12,7 @@ import SourceKittenFramework
 
 public final class MethodParser<S: SourceCode>: FunctionParser<S, MethodSpecification> {
 
-    public override func isRawFunctionDescription(_ element: Parameters) -> Bool {
+    public override func isRawFunctionSpecification(_ element: Parameters) -> Bool {
         guard let kind = element.kind else { return false }
         return SwiftDeclarationKind.functionMethodInstance.rawValue == kind
             || SwiftDeclarationKind.functionMethodStatic.rawValue   == kind

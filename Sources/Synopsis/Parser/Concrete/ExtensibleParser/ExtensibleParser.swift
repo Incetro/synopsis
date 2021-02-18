@@ -16,7 +16,7 @@ public class ExtensibleParser<S: SourceCode, Model: ExtensibleSpecification> {
     /// Checks if the given structure is an extensible
     /// - Parameter element: some element structure
     /// - Returns: true if the given structure is an enum
-    public func isRawExtensibleDescription(_ element: Parameters) -> Bool {
+    public func isRawExtensibleSpecification(_ element: Parameters) -> Bool {
         false
     }
 
@@ -28,7 +28,7 @@ public class ExtensibleParser<S: SourceCode, Model: ExtensibleSpecification> {
     private func parse(source: S) -> [Model] {
         source
             .substructure
-            .filter(isRawExtensibleDescription)
+            .filter(isRawExtensibleSpecification)
             .map {
                 parse(
                     extensibleDictionary: $0,

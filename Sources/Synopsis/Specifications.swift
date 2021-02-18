@@ -126,7 +126,7 @@ public extension Specifications {
                 methodSpecification.arguments.forEach { (argumentSpecification: ArgumentSpecification) in
                     messages.append(
                         XcodeMessage(
-                            /// TODO: replace with ArgumentDescription.declaration
+                            /// TODO: replace with ArgumentSpecification.declaration
                             declaration: methodSpecification.declaration,
                             message: argumentSpecification.debugDescription,
                             type: .warning
