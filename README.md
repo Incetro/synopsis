@@ -669,7 +669,7 @@ Classes, structs, protocols, properties, methods etc. — almost all detected so
 * lineNumber — self-explanatory;
 * columnNumber — self-explanatory; starts from 1.
 
-<a name="declarations" />
+<a name="nested" />
 
 ### Nested parsing
 
