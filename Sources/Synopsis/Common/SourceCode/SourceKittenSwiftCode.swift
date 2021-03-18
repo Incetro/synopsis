@@ -34,6 +34,6 @@ public struct SourceKittenSwiftCode: SourceCode {
         guard let dictionary = sourceCodeDictionary[fileURL.absoluteString] as? Parameters else {
             return []
         }
-        return dictionary.subsctructure
+        return dictionary.substructure
     }
 }

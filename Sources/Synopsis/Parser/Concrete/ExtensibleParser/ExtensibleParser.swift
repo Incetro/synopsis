@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - ExtensibleParser
 
-public class ExtensibleParser<S: SourceCode, Model: ExtensibleSpecification> {
+public class ExtensibleParser<S: SourceCode, Model: ExtensibleSpecification>: CompositionParser<S> {
 
     // MARK: - Useful
 
@@ -63,12 +63,12 @@ extension ExtensibleParser {
         let inheritedTypes = extensibleDictionary.inheritedTypes
 
         let properties = PropertyParser().parse(
-            rawStructureElements: extensibleDictionary.subsctructure,
+            rawStructureElements: extensibleDictionary.substructure,
             forFileAt: fileURL,
             withContent: content
         )
         let methods = MethodParser<S>().parse(
-            rawStructureElements: extensibleDictionary.subsctructure,
+            rawStructureElements: extensibleDictionary.substructure,
             forFileAt: fileURL,
             withContent: content
         )
@@ -82,7 +82,35 @@ extension ExtensibleParser {
             offset: declarationOffset
         )
 
+        let enums = self.enums(
+            from: extensibleDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
+        let structs = self.structs(
+            from: extensibleDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
+        let protocols = self.protocols(
+            from: extensibleDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
+        let classes = self.classes(
+            from: extensibleDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
         return Model(
+            enums: enums,
+            structs: structs,
+            classes: classes,
+            protocols: protocols,
             comment: comment,
             annotations: annotations,
             declaration: declaration,

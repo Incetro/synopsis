@@ -5,6 +5,7 @@
 //  Created by incetro on 11/23/20.
 //
 
+import Foundation
 import SourceKittenFramework
 
 // MARK: - Dictionary
@@ -54,7 +55,7 @@ public extension Dictionary where Key == String {
         """)
     }
 
-    var subsctructure: [Parameters] {
+    var substructure: [Parameters] {
         self[.substructure] as? [Parameters] ?? []
     }
 

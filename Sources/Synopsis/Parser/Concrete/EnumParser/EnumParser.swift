@@ -10,16 +10,9 @@ import SourceKittenFramework
 
 // MARK: - EnumParser
 
-public final class EnumParser<S: SourceCode> {
+public final class EnumParser<S: SourceCode>: CompositionParser<S> {
 
     // MARK: - Private
-
-    /// Checks if the given structure is an enum
-    /// - Parameter element: some element structure
-    /// - Returns: true if the given structure is an enum
-    private func isRawEnumSpecification(_ element: Parameters) -> Bool {
-        SwiftDeclarationKind.`enum`.rawValue == element.kind
-    }
 
     /// Parse enums from the given source code
     /// - Parameter source: some source code representation
@@ -42,6 +35,13 @@ public final class EnumParser<S: SourceCode> {
 
 extension EnumParser {
 
+    /// Checks if the given structure is an enum
+    /// - Parameter element: some element structure
+    /// - Returns: true if the given structure is an enum
+    public func isRawEnumSpecification(_ element: Parameters) -> Bool {
+        SwiftDeclarationKind.`enum`.rawValue == element.kind
+    }
+
     /// Parse the given structure to an enum specification
     /// - Parameters:
     ///   - structure: dictionary with an enum data
@@ -61,17 +61,17 @@ extension EnumParser {
         let name = enumDictionary.name
         let inheritedTypes = enumDictionary.inheritedTypes
         let cases = EnumCaseParser().parse(
-            structure: enumDictionary.subsctructure,
+            structure: enumDictionary.substructure,
             forFileAt: fileURL,
             withContent: content
         )
         let properties = PropertyParser().parse(
-            rawStructureElements: enumDictionary.subsctructure,
+            rawStructureElements: enumDictionary.substructure,
             forFileAt: fileURL,
             withContent: content
         )
         let methods = MethodParser<S>().parse(
-            rawStructureElements: enumDictionary.subsctructure,
+            rawStructureElements: enumDictionary.substructure,
             forFileAt: fileURL,
             withContent: content
         )
@@ -85,7 +85,35 @@ extension EnumParser {
             offset: declarationOffset
         )
 
+        let enums = self.enums(
+            from: enumDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
+        let structs = self.structs(
+            from: enumDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
+        let protocols = self.protocols(
+            from: enumDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
+        let classes = self.classes(
+            from: enumDictionary.substructure,
+            forFileAt: fileURL,
+            withContent: content
+        )
+
         return EnumSpecification(
+            enums: enums,
+            structs: structs,
+            classes: classes,
+            protocols: protocols,
             comment: comment,
             annotations: annotations,
             declaration: declaration,

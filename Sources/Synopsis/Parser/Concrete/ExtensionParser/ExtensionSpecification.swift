@@ -13,6 +13,18 @@ public struct ExtensionSpecification: ExtensibleSpecification {
 
     // MARK: - Properties
 
+    /// Nested enums
+    public let enums: [EnumSpecification]
+
+    /// Nested structs
+    public let structs: [StructureSpecification]
+
+    /// Nested classes
+    public let classes: [ClassSpecification]
+
+    /// Nested protocols
+    public let protocols: [ProtocolSpecification]
+
     /// Documentation comment above the struct
     public let comment: String?
 
@@ -60,6 +72,10 @@ public struct ExtensionSpecification: ExtensibleSpecification {
     ///   - properties: list of properties
     ///   - methods: list of methods
     public init(
+        enums: [EnumSpecification] = [],
+        structs: [StructureSpecification] = [],
+        classes: [ClassSpecification] = [],
+        protocols: [ProtocolSpecification] = [],
         comment: String?,
         annotations: [AnnotationSpecification],
         declaration: Declaration,
@@ -70,6 +86,10 @@ public struct ExtensionSpecification: ExtensibleSpecification {
         properties: [PropertySpecification],
         methods: [MethodSpecification]
     ) {
+        self.enums          = enums
+        self.structs        = structs
+        self.classes        = classes
+        self.protocols      = protocols
         self.comment        = comment
         self.annotations    = annotations
         self.declaration    = declaration

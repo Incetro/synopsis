@@ -13,6 +13,18 @@ public struct ClassSpecification: ExtensibleSpecification {
 
     // MARK: - Properties
 
+    /// Nested enums
+    public let enums: [EnumSpecification]
+
+    /// Nested structs
+    public let structs: [StructureSpecification]
+
+    /// Nested classes
+    public let classes: [ClassSpecification]
+
+    /// Nested protocols
+    public let protocols: [ProtocolSpecification]
+
     /// Documentation comment above the struct
     public let comment: String?
 
@@ -60,6 +72,10 @@ public struct ClassSpecification: ExtensibleSpecification {
     ///   - properties: list of properties
     ///   - methods: list of methods
     public init(
+        enums: [EnumSpecification] = [],
+        structs: [StructureSpecification] = [],
+        classes: [ClassSpecification] = [],
+        protocols: [ProtocolSpecification] = [],
         comment: String?,
         annotations: [AnnotationSpecification],
         declaration: Declaration,
@@ -70,6 +86,10 @@ public struct ClassSpecification: ExtensibleSpecification {
         properties: [PropertySpecification],
         methods: [MethodSpecification]
     ) {
+        self.enums          = enums
+        self.structs        = structs
+        self.classes        = classes
+        self.protocols      = protocols
         self.comment        = comment
         self.annotations    = annotations
         self.declaration    = declaration
@@ -122,6 +142,18 @@ extension ClassSpecification {
     /// Write down own source code
     public var verse: String {
 
+        let enums = self.enums.map(\.verse).joined(separator: "\n\n")
+        let enumsStr = enums.isEmpty ? "" : "\n\n" + enums
+
+        let structs = self.structs.map(\.verse).joined(separator: "\n\n")
+        let structsStr = structs.isEmpty ? "" : "\n\n" + structs
+
+        let classes = self.classes.map(\.verse).joined(separator: "\n\n")
+        let classesStr = classes.isEmpty ? "" : "\n\n" + classes
+
+        let protocols = self.protocols.map(\.verse).joined(separator: "\n\n")
+        let protocolsStr = protocols.isEmpty ? "" : "\n\n" + protocols
+
         let classMarkStr = "// MARK: - \(name)\n\n"
         let propertiesMarkStr = properties.isEmpty ? "" : "\n// MARK: - Properties\n".indent
         let methodsMarkStr = methods.isEmpty ? "" : "\n// MARK: - Useful\n".indent
@@ -160,7 +192,7 @@ extension ClassSpecification {
 
         return "\(classMarkStr)\(commentStr)"
             + "\(accessibilityStr)\(classStr)\(name)\(inheritedTypesStr)"
-            + " {\n\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
+            + " {\n\(enumsStr.indent)\(structsStr.indent)\(classesStr.indent)\(protocolsStr.indent)\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
     }
 }
 

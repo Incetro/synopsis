@@ -14,6 +14,18 @@ public protocol ExtensibleSpecification: Specification, Equatable, CustomDebugSt
 
     // MARK: - Properties
 
+    /// Nested enums
+    var enums: [EnumSpecification] { get }
+
+    /// Nested structs
+    var structs: [StructureSpecification] { get }
+
+    /// Nested classes
+    var classes: [ClassSpecification] { get }
+
+    /// Nested protocols
+    var protocols: [ProtocolSpecification] { get }
+
     /// Documentation comment above the extensible
     var comment: String? { get }
 
@@ -57,6 +69,10 @@ public protocol ExtensibleSpecification: Specification, Equatable, CustomDebugSt
     ///   - properties: list of properties
     ///   - methods: list of methods
     init(
+        enums: [EnumSpecification],
+        structs: [StructureSpecification],
+        classes: [ClassSpecification],
+        protocols: [ProtocolSpecification],
         comment: String?,
         annotations: [AnnotationSpecification],
         declaration: Declaration,

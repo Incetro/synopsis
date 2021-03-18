@@ -83,7 +83,7 @@ extension EnumCaseParser {
                 ///    case option1, option2
                 /// }
                 /// Our goal is to flat them out
-                enumCaseDictionary.subsctructure.map {
+                enumCaseDictionary.substructure.map {
                     EnumCaseElement(offset: enumCaseDictionary.offset, structure: $0)
                 }
             }

@@ -13,6 +13,18 @@ public struct EnumSpecification {
 
     // MARK: - Properties
 
+    /// Nested enums
+    public let enums: [EnumSpecification]
+
+    /// Nested structs
+    public let structs: [StructureSpecification]
+
+    /// Nested classes
+    public let classes: [ClassSpecification]
+
+    /// Nested protocols
+    public let protocols: [ProtocolSpecification]
+
     /// Enum comment value
     public let comment: String?
 
@@ -58,6 +70,10 @@ public struct EnumSpecification {
     ///   - properties: list of enum properties
     ///   - methods: enum methods
     public init(
+        enums: [EnumSpecification] = [],
+        structs: [StructureSpecification] = [],
+        classes: [ClassSpecification] = [],
+        protocols: [ProtocolSpecification] = [],
         comment: String?,
         annotations: [AnnotationSpecification],
         declaration: Declaration,
@@ -69,6 +85,10 @@ public struct EnumSpecification {
         properties: [PropertySpecification],
         methods: [MethodSpecification]
     ) {
+        self.enums          = enums
+        self.structs        = structs
+        self.classes        = classes
+        self.protocols      = protocols
         self.comment        = comment
         self.annotations    = annotations
         self.declaration    = declaration
@@ -115,6 +135,18 @@ extension EnumSpecification: Specification {
 
     public var verse: String {
 
+        let enums = self.enums.map(\.verse).joined(separator: "\n\n")
+        let enumsStr = enums.isEmpty ? "" : "\n\n" + enums
+
+        let structs = self.structs.map(\.verse).joined(separator: "\n\n")
+        let structsStr = structs.isEmpty ? "" : "\n\n" + structs
+
+        let classes = self.classes.map(\.verse).joined(separator: "\n\n")
+        let classesStr = classes.isEmpty ? "" : "\n\n" + classes
+
+        let protocols = self.protocols.map(\.verse).joined(separator: "\n\n")
+        let protocolsStr = protocols.isEmpty ? "" : "\n\n" + protocols
+
         let enumMarkStr = "// MARK: - \(name)\n\n"
         let casesMarkStr = "\n\n// MARK: - Cases".indent
         let propertiesMarkStr = properties.isEmpty ? "" : "\n// MARK: - Properties\n".indent
@@ -158,7 +190,7 @@ extension EnumSpecification: Specification {
 
         let methodsStr: String
         if methods.isEmpty {
-            methodsStr = ""
+            methodsStr = "\n"
         } else {
             methodsStr = methods.reduce("\n") { (result: String, method: MethodSpecification) -> String in
                 methods.last == method
@@ -169,9 +201,9 @@ extension EnumSpecification: Specification {
 
         return "\(enumMarkStr)\(commentStr)"
              + "\(accessibilityStr)\(attributesStr)\(enumStr)\(name)\(inheritedTypesStr) "
-             + "{\(casesMarkStr)\(casesStr)"
+            + "{\(enumsStr.indent)\(structsStr.indent)\(classesStr.indent)\(protocolsStr.indent)\(casesMarkStr)\(casesStr)"
              + "\(propertiesMarkStr)\(propertiesStr)"
-             + "\(methodsMarkStr)\(methodsStr)}\n"
+             + "\(methodsMarkStr)\(methodsStr)}"
     }
 }
 
