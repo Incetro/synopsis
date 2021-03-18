@@ -670,6 +670,53 @@ Classes, structs, protocols, properties, methods etc. — almost all detected so
 
 <a name="versing" />
 
+### Nested parsing
+
+`Synopsis` is able to parse your nested instructions like:
+
+```swift
+
+// MARK: - Constants
+
+enum Contants {
+
+    static let newConstant: Double = 0.5
+
+    // MARK: - Network
+
+    enum Network {
+
+        static let timeout: TimeInterval = 20
+
+        // MARK: - Headers
+
+        enum Headers {
+
+            static let headerOS = "iOS"
+        }
+    }
+}
+
+```
+
+Enums, structures, classes and protocols have their nested properties:
+
+```swift
+/// Nested enums
+public let enums: [EnumSpecification]
+
+/// Nested structs
+public let structs: [StructureSpecification]
+
+/// Nested classes
+public let classes: [ClassSpecification]
+
+/// Nested protocols
+public let protocols: [ProtocolSpecification]
+```
+
+So, if you need you will have nested declarations inside your specification.
+
 ### Code generation, templates and versing
 
 Each source code element provides a computed `String` property `verse`, which allows to obtain this element's source code.
