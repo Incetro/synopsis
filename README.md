@@ -47,6 +47,7 @@ public struct PaginationMetadataPlainObject {
     - [Annotations](#annotations)
     - [Property types, argument types, return types](#types)
     - [Declaration](#declarations)
+    - [Nested parsing](#nested)
 * [Code generation, templates and versing](#versing)
 
 ### Synopsis struct
@@ -668,7 +669,7 @@ Classes, structs, protocols, properties, methods etc. — almost all detected so
 * lineNumber — self-explanatory;
 * columnNumber — self-explanatory; starts from 1.
 
-<a name="versing" />
+<a name="declarations" />
 
 ### Nested parsing
 
@@ -716,6 +717,8 @@ public let protocols: [ProtocolSpecification]
 ```
 
 So, if you need you will have nested declarations inside your specification.
+
+<a name="versing" />
 
 ### Code generation, templates and versing
 
