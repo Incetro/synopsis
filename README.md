@@ -700,7 +700,7 @@ enum Contants {
 
 ```
 
-Enums, structures, classes and protocols have their nested properties:
+Enums, extension, structures, classes and protocols have their nested properties:
 
 ```swift
 /// Nested enums
