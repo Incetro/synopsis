@@ -142,6 +142,18 @@ extension ExtensionSpecification {
     /// Write down own source code
     public var verse: String {
 
+        let enums = self.enums.map(\.verse).joined(separator: "\n\n")
+        let enumsStr = enums.isEmpty ? "" : "\n\n" + enums
+
+        let structs = self.structs.map(\.verse).joined(separator: "\n\n")
+        let structsStr = structs.isEmpty ? "" : "\n\n" + structs
+
+        let classes = self.classes.map(\.verse).joined(separator: "\n\n")
+        let classesStr = classes.isEmpty ? "" : "\n\n" + classes
+
+        let protocols = self.protocols.map(\.verse).joined(separator: "\n\n")
+        let protocolsStr = protocols.isEmpty ? "" : "\n\n" + protocols
+        
         let extensionMarkStr = "// MARK: - \(inheritedTypes.joined(separator: ", "))\n\n"
 
         let commentStr: String
@@ -174,7 +186,7 @@ extension ExtensionSpecification {
 
         return "\(extensionMarkStr)\(commentStr)"
             + "\(accessibilityStr)extension \(name)\(inheritedTypesStr)"
-            + " {\n\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
+            + " {\n\(enumsStr.indent)\(structsStr.indent)\(classesStr.indent)\(protocolsStr.indent)\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
     }
 }
 
