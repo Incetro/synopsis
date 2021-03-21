@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  ProtocolParser.swift
+//  Synopsis
 //
 //  Created by incetro on 11/27/20.
+//  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
 import Foundation

@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  EnumCaseParser.swift
+//  Synopsis
 //
 //  Created by incetro on 11/24/20.
+//  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
 import Foundation

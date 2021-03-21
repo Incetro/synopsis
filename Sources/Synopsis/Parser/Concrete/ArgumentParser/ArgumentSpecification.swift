@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  ArgumentSpecification.swift
+//  Synopsis
 //
 //  Created by incetro on 11/25/20.
+//  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
 import Foundation

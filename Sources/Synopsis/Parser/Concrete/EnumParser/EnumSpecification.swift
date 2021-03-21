@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  EnumSpecification.swift
+//  Synopsis
 //
 //  Created by incetro on 11/23/20.
+//  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
 import Foundation

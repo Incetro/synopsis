@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  XcodeMessage.swift
+//  Synopsis
 //
 //  Created by incetro on 12/9/20.
+//  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
 import Foundation

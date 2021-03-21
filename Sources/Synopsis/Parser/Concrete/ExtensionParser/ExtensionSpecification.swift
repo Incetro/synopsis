@@ -1,8 +1,9 @@
 //
-//  File.swift
-//  
+//  ExtensionSpecification.swift
+//  Synopsis
 //
 //  Created by incetro on 11/28/20.
+//  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
 import Foundation
@@ -184,9 +185,11 @@ extension ExtensionSpecification {
                 result + method.verse.indent + (methods.last == method ? "\n" : "\n\n")
             }
 
+        let bodyEmptyLine = [enumsStr, structsStr, classesStr, protocolsStr].joined().isEmpty ? "\n" : ""
+
         return "\(extensionMarkStr)\(commentStr)"
             + "\(accessibilityStr)extension \(name)\(inheritedTypesStr)"
-            + " {\n\(enumsStr.indent)\(structsStr.indent)\(classesStr.indent)\(protocolsStr.indent)\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
+            + "{\(bodyEmptyLine)\(enumsStr.indent)\(structsStr.indent)\(classesStr.indent)\(protocolsStr.indent)\(propertiesStr)\(initializersStr)\(methodsStr)}\n"
     }
 }
 
