@@ -6,6 +6,7 @@
 //  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
+import Files
 import Foundation
 
 // MARK: - Declaration
@@ -31,6 +32,20 @@ public struct Declaration {
 
     /// Calculated column number
     public let columnNumber: Int
+
+    /// Target file content
+    public var content: String {
+        let content = try? File(path: filePath.absoluteString).readAsString()
+        return content ?? ""
+    }
+
+    /// All declared imports inside current file
+    public var imports: [String] {
+        content
+            .components(separatedBy: "\n")
+            .filter { $0.hasPrefix("import") }
+            .compactMap { $0.components(separatedBy: " ").last }
+    }
 
     // MARK: - Initializers
 

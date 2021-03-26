@@ -656,6 +656,12 @@ public struct Declaration {
 
     /// Calculated column number
     public let columnNumber: Int
+    
+    /// Target file content
+    public var content: String { get }
+    
+    /// All declared imports inside current file
+    public var imports: [String] { get }
 }
 ```
 
@@ -668,6 +674,8 @@ Classes, structs, protocols, properties, methods etc. — almost all detected so
 * offset — a numer of symbols from the beginning of file to the detected source code element;
 * lineNumber — self-explanatory;
 * columnNumber — self-explanatory; starts from 1.
+* content — content of the file where the given declaration placed.
+* imports — all declared imports inside current file (like `import Foundation` will be returned as `["Foundation"]`)
 
 <a name="nested" />
 
