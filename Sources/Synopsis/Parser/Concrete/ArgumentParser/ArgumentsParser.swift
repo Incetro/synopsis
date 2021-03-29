@@ -32,7 +32,7 @@ public final class ArgumentsParser {
         let openBraceIndex = findOpenBrace(inMethodDeclaration: declaration)
         let argumentsStart = declaration.index(after: openBraceIndex)
         let lex = LexemeString(declaration)
-        for index in declaration.indices where ")" == declaration[index] && lex.inSourceCodeRange(index) {
+        for index in declaration.indices.reversed() where ")" == declaration[index] && lex.inSourceCodeRange(index) {
             return String(declaration[argumentsStart..<index])
         }
         return declaration
