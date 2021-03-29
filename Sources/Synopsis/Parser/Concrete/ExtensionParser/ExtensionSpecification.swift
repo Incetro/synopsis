@@ -154,8 +154,9 @@ extension ExtensionSpecification {
 
         let protocols = self.protocols.map(\.verse).joined(separator: "\n\n")
         let protocolsStr = protocols.isEmpty ? "" : "\n\n" + protocols
-        
-        let extensionMarkStr = "// MARK: - \(inheritedTypes.joined(separator: ", "))\n\n"
+
+        let inheritedTypesMarkStr = inheritedTypes.joined(separator: ", ")
+        let extensionMarkStr = "// MARK: - \(inheritedTypesMarkStr.isEmpty ? "\(name)" : inheritedTypesMarkStr)\n\n"
 
         let commentStr: String
         if let commentExpl = comment, !commentExpl.isEmpty {
@@ -165,7 +166,7 @@ extension ExtensionSpecification {
         }
 
         let accessibilityStr = accessibility.verse.isEmpty ? "" : "\(accessibility.verse) "
-        let inheritedTypesStr = inheritedTypes.isEmpty ? "" : ": " + inheritedTypes.joined(separator: ", ")
+        let inheritedTypesStr = inheritedTypes.isEmpty ? " " : ": " + inheritedTypes.joined(separator: ", ")
 
         let propertiesStr = properties.isEmpty
             ? ""

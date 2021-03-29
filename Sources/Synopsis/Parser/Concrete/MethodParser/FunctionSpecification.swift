@@ -47,10 +47,22 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
     /// Function body, if available
     public let body: String?
 
+    /// Return true if current function
+    /// has `throws` or specification
+    public var isThrowing: Bool {
+        declaration.rawText?.contains(" throws") == true
+    }
+
+    /// Return true if current function
+    /// has `rethorws` specification
+    public var isRethrowing: Bool {
+        declaration.rawText?.contains(" rethrows") == true
+    }
+
     /// True if we need to indent our parameters comments
     /// by longest parameters string:
     ///
-    /// if indentCommentByLongestParameter is true that we'll have:
+    /// if indentCommentByLongestParameter is true then we'll have:
     /// ```
     /// func obtainUser(
     ///     withFirstName firstName: String, /// first name comment
@@ -216,7 +228,8 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
         let funcStr          = (attributesStr.isEmpty ? "" : " ") + "func "
         let nameStr          = name[..<openBraceIndex]
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
-        let returnTypeStr    = returnType.map { $0 == .void ? "" : " -> \($0.verse)" } ?? ""
+        let throwsStr        = isThrowing ? "throws" : isRethrowing ? "rethrows" : ""
+        let returnTypeStr    = returnType.map { $0 == .void ? throwsStr : "\(throwsStr) -> \($0.verse)" } ?? ""
         let bodyStr          = body.map {
             $0.isEmpty
                 ? " {}"

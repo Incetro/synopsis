@@ -42,7 +42,8 @@ public final class MethodSpecification: FunctionSpecification {
         let funcStr          = isInitializer ? "" : (attributesStr.isEmpty ? "" : " ") + "func "
         let nameStr          = name[..<openBraceIndex]
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
-        let returnTypeStr    = returnType.map { isInitializer ? "" : $0 == .void ? "" : " -> \($0.verse)" } ?? ""
+        let throwsStr        = isThrowing ? " throws" : isRethrowing ? " rethrows" : ""
+        let returnTypeStr    = returnType.map { isInitializer ? throwsStr : $0 == .void ? throwsStr : "\(throwsStr) -> \($0.verse)" } ?? ""
         let bodyStr          = body.map {
             $0.isEmpty
                 ? " {}"

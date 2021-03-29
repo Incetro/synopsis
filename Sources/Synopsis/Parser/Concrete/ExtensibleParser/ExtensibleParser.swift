@@ -79,7 +79,7 @@ extension ExtensibleParser {
         let declaration = Declaration(
             filePath: fileURL,
             fileContents: content,
-            rawText: extensibleDictionary.parsedDeclaration,
+            rawText: extensibleDictionary[.parsedDeclaration] as? String,
             offset: declarationOffset
         )
 
