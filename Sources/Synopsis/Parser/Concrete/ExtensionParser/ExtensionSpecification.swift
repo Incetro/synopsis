@@ -122,7 +122,7 @@ public struct ExtensionSpecification: ExtensibleSpecification {
         properties: [PropertySpecification],
         methods: [MethodSpecification]
     ) -> ExtensionSpecification {
-        return ExtensionSpecification(
+        ExtensionSpecification(
             comment: comment,
             annotations: [],
             declaration: Declaration.mock,

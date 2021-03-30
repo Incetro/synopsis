@@ -41,6 +41,7 @@ public final class MethodSpecification: FunctionSpecification {
             .joined(separator: " ")
         let funcStr          = isInitializer ? "" : (attributesStr.isEmpty ? "" : " ") + "func "
         let nameStr          = name[..<openBraceIndex]
+        let genericsStr      = generics.map(\.verse).joined(separator: ", ").enclosed(byLeft: "<", andRight: ">")
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
         let throwsStr        = isThrowing ? " throws" : isRethrowing ? " rethrows" : ""
         let returnTypeStr    = returnType.map { isInitializer ? throwsStr : $0 == .void ? throwsStr : "\(throwsStr) -> \($0.verse)" } ?? ""
@@ -78,7 +79,7 @@ public final class MethodSpecification: FunctionSpecification {
         }
 
         return """
-        \(commentStr)\(accessibilityStr)\(attributesStr)\(kindStr)\(funcStr)\(nameStr)(\(argumentsStr.indent))\(returnTypeStr)\(bodyStr)
+        \(commentStr)\(accessibilityStr)\(attributesStr)\(kindStr)\(funcStr)\(nameStr)\(genericsStr)(\(argumentsStr.indent))\(returnTypeStr)\(bodyStr)
         """
     }
 

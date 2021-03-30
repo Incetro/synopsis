@@ -31,6 +31,9 @@ final class TypeParser {
         let declarationWithoutDefaultValue = declaration
             .truncateAfter(word: "=", deleteWord: true)
             .trimmingCharacters(in: .whitespacesAndNewlines)
+        if declarationWithoutDefaultValue.contains(":", atLeast: 2) {
+            return parse(rawType: declarationWithoutDefaultValue)
+        }
         let typename = declarationWithoutDefaultValue
             .truncateUntilExist(word: ":")
             .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -61,6 +64,7 @@ final class TypeParser {
         }
 
         if rawType.contains("<") && rawType.contains(">") {
+            guard rawType.last == ">" else { return .object(name: rawType) }
             let name = rawType.truncateAfter(word: "<", deleteWord: true).trimmingCharacters(in: .whitespacesAndNewlines)
             let itemName = String(rawType.truncateUntilExist(word: "<").truncateAfter(word: ">", deleteWord: true))
             let itemType = self.parse(rawType: itemName)
@@ -108,8 +112,10 @@ final class TypeParser {
         }
 
         var objectTypeName = rawType.contains("inout ") ? rawType : String(rawType.firstWord())
+        print("1. \(objectTypeName)")
         if objectTypeName.last == "?" {
             objectTypeName = String(objectTypeName.dropLast())
+            print("2. \(objectTypeName)")
         }
 
         return .object(name: objectTypeName)
@@ -164,9 +170,17 @@ final class TypeParser {
     /// - Returns: collection item type
     private func parseCollectionItemType(_ collecitonItemTypeName: String) -> TypeSpecification {
         if collecitonItemTypeName.contains(":") {
-            let keyTypeName = String(collecitonItemTypeName.truncateAfter(word: ":", deleteWord: true))
-            let valueTypeName = String(collecitonItemTypeName.truncateUntilExist(word: ":"))
-            return .map(key: self.parse(rawType: keyTypeName), value: self.parse(rawType: valueTypeName))
+            let keyTypeName = String(
+                collecitonItemTypeName.truncateAfter(word: ":", deleteWord: true)
+            ).trimmingCharacters(in: .whitespacesAndNewlines)
+            let valueTypeName = String(
+                collecitonItemTypeName.truncateUntilExist(word: ":")
+            ).trimmingCharacters(in: .whitespacesAndNewlines)
+            let result = TypeSpecification.map(
+                key: self.parse(rawType: keyTypeName),
+                value: self.parse(rawType: valueTypeName)
+            )
+            return result
         } else {
             return .array(element: self.parse(rawType: collecitonItemTypeName))
         }

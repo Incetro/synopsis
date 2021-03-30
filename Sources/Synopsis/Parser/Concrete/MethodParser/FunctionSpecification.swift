@@ -32,6 +32,15 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
     /// Almost like signature, but without argument types
     public let name: String
 
+    /// Function's generics sequence
+    ///
+    /// The example is here:
+    /// `func convert<T, E: Equatable & Hashable, Payload>(trainer: T, emulator: E) -> Array<Payload>`
+    ///
+    /// generics array will contain `["T", "E: Equatable & Hashable", "Payload"]` sequence
+    ///
+    public let generics: [GenericSpecification]
+
     /// Function arguments
     public let arguments: [ArgumentSpecification]
 
@@ -103,6 +112,7 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
         accessibility: AccessibilitySpecification,
         attributes: [AttributeSpecification],
         name: String,
+        generics: [GenericSpecification],
         arguments: [ArgumentSpecification],
         returnType: TypeSpecification?,
         declaration: Declaration,
@@ -114,6 +124,7 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
         self.accessibility = accessibility
         self.attributes    = attributes
         self.name          = name
+        self.generics      = generics
         self.arguments     = arguments
         self.returnType    = returnType
         self.declaration   = declaration
@@ -139,6 +150,7 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
         accessibility: AccessibilitySpecification,
         attributes: [AttributeSpecification],
         name: String,
+        generics: [GenericSpecification],
         arguments: [ArgumentSpecification],
         returnType: TypeSpecification?,
         kind: Kind,
@@ -153,6 +165,7 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
             accessibility: accessibility,
             attributes: attributes,
             name: name,
+            generics: generics,
             arguments: arguments,
             returnType: returnType,
             declaration: Declaration.mock,
@@ -227,6 +240,7 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
             .joined(separator: " ")
         let funcStr          = (attributesStr.isEmpty ? "" : " ") + "func "
         let nameStr          = name[..<openBraceIndex]
+        let genericsStr      = generics.map(\.verse).joined(separator: ", ").enclosed(byLeft: "<", andRight: ">")
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
         let throwsStr        = isThrowing ? "throws" : isRethrowing ? "rethrows" : ""
         let returnTypeStr    = returnType.map { $0 == .void ? throwsStr : "\(throwsStr) -> \($0.verse)" } ?? ""
@@ -264,7 +278,7 @@ public class FunctionSpecification: Specification, CustomDebugStringConvertible 
         }
 
         return """
-        \(commentStr)\(accessibilityStr)\(attributesStr)\(kindStr)\(funcStr)\(nameStr)(\(argumentsStr.indent))\(returnTypeStr)\(bodyStr)
+        \(commentStr)\(accessibilityStr)\(attributesStr)\(kindStr)\(funcStr)\(nameStr)\(genericsStr)(\(argumentsStr.indent))\(returnTypeStr)\(bodyStr)
         """
     }
 }

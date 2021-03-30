@@ -60,6 +60,7 @@ public class FunctionParser<S: SourceCode, Function: FunctionSpecification> {
         )
 
         let name = rawStructureElements.name
+        let generics = GenericParser().parse(functionDeclaration: declarationString)
         let comment = rawStructureElements.comment
         let annotations = comment.map { AnnotationParser().parse(comment: $0) } ?? []
         let accessibility = AccessibilitySpecification.deduce(forRawStructureElement: rawStructureElements)
@@ -83,6 +84,7 @@ public class FunctionParser<S: SourceCode, Function: FunctionSpecification> {
             accessibility: accessibility,
             attributes: attributes,
             name: name,
+            generics: generics,
             arguments: arguments,
             returnType: returnType,
             declaration: declaration,

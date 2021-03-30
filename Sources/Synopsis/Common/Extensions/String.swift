@@ -111,6 +111,15 @@ public extension String {
             .map { prefix + $0 }
             .joined(separator: "\n")
     }
+
+    func enclosed(byLeft left: String, andRight right: String) -> String {
+        if isEmpty { return "" }
+        return left + self + right
+    }
+
+    func contains(_ string: String, atLeast count: Int) -> Bool {
+        components(separatedBy: string).count - 1 >= count
+    }
 }
 
 // MARK: - Substring
