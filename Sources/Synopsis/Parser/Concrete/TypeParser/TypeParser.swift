@@ -83,7 +83,12 @@ final class TypeParser {
             return .boolean
         }
 
-        if rawType.contains("Int") {
+        let integerTypes = [
+            "Int", "Int8", "Int16", "Int32", "Int64",
+            "UInt", "UInt8", "UInt16", "UInt32", "UInt64"
+        ]
+
+        if integerTypes.contains(rawType) {
             return .integer
         }
 
@@ -112,10 +117,8 @@ final class TypeParser {
         }
 
         var objectTypeName = rawType.contains("inout ") ? rawType : String(rawType.firstWord())
-        print("1. \(objectTypeName)")
         if objectTypeName.last == "?" {
             objectTypeName = String(objectTypeName.dropLast())
-            print("2. \(objectTypeName)")
         }
 
         return .object(name: objectTypeName)
