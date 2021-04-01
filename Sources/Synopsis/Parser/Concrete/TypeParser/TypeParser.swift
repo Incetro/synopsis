@@ -51,6 +51,26 @@ final class TypeParser {
         return guessType(ofVariableValue: defaultValue)
     }
 
+    /// Parse the given generic raw type
+    /// - Parameter rawType: alleged generic type
+    /// - Returns: generic type specification
+    private func parseGeneric(rawType: String) -> TypeSpecification {
+        if
+            let firstAngleIndex = rawType.firstIndex(of: "<"),
+            let lastAngleIndex = rawType.lastIndex(of: ">")
+        {
+            let typeBeginIndex = rawType.index(firstAngleIndex, offsetBy: 1)
+            let typeEndIndex = rawType.index(lastAngleIndex, offsetBy: -1)
+            let genericType = String(rawType[typeBeginIndex...typeEndIndex])
+            guard rawType.last == ">" else { return .object(name: rawType) }
+            let constraints = genericType.components(separatedBy: ",").map(parseGeneric)
+            let name = rawType.truncateAfter(word: "<", deleteWord: true).trimmingCharacters(in: .whitespacesAndNewlines)
+            return .generic(name: name, constraints: constraints)
+        } else {
+            return parse(rawType: rawType)
+        }
+    }
+
     /// Parse raw type line without any other garbage.
     /// - Parameter rawType: raw type value
     /// - Returns: TypeSpecification instance
@@ -63,12 +83,8 @@ final class TypeParser {
             )
         }
 
-        if rawType.contains("<") && rawType.contains(">") {
-            guard rawType.last == ">" else { return .object(name: rawType) }
-            let name = rawType.truncateAfter(word: "<", deleteWord: true).trimmingCharacters(in: .whitespacesAndNewlines)
-            let itemName = String(rawType.truncateUntilExist(word: "<").truncateAfter(word: ">", deleteWord: true))
-            let itemType = self.parse(rawType: itemName)
-            return .generic(name: name, constraints: [itemType])
+        if rawType.isGeneric {
+            return parseGeneric(rawType: rawType)
         }
 
         if rawType.contains("[") && rawType.contains("]") {

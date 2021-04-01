@@ -120,6 +120,10 @@ public extension String {
     func contains(_ string: String, atLeast count: Int) -> Bool {
         components(separatedBy: string).count - 1 >= count
     }
+
+    var isGeneric: Bool {
+        contains("<") && contains(">")
+    }
 }
 
 // MARK: - Substring
