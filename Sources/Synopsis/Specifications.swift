@@ -139,3 +139,33 @@ public extension Specifications {
         return messages
     }
 }
+
+// MARK: - Array
+
+public extension Array where Element == StructureSpecification {
+
+    func named(_ name: String) -> StructureSpecification? {
+        first { $0.name == name }
+    }
+}
+
+public extension Array where Element == ClassSpecification {
+
+    func named(_ name: String) -> ClassSpecification? {
+        first { $0.name == name }
+    }
+}
+
+public extension Array where Element == EnumSpecification {
+
+    func named(_ name: String) -> EnumSpecification? {
+        first { $0.name == name }
+    }
+}
+
+public extension Array where Element == ProtocolSpecification {
+
+    func named(_ name: String) -> ProtocolSpecification? {
+        first { $0.name == name }
+    }
+}
