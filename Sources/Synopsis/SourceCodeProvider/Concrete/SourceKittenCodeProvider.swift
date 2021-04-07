@@ -43,14 +43,7 @@ extension SourceKittenCodeProvider: SourceCodeProvider {
         for url in urls {
             do {
                 let file = try File(path: url.absoluteString)
-                guard let content = String(data: try file.read(), encoding: .utf8) else {
-                    let synopsisError = SynopsisError(
-                        description: "Cannot read file content",
-                        file: url
-                    )
-                    errors.append(synopsisError)
-                    continue
-                }
+                let content = try file.readAsString()
                 guard !content.contains("synopsis:disable") else {
                     continue
                 }
