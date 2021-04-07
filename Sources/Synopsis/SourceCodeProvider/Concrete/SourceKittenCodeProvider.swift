@@ -6,6 +6,7 @@
 //  Copyright © 2020 Incetro Inc. All rights reserved.
 //
 
+import Files
 import Foundation
 import source_kitten_adapter
 
@@ -41,6 +42,18 @@ extension SourceKittenCodeProvider: SourceCodeProvider {
         var result: [SourceKittenSwiftCode] = []
         for url in urls {
             do {
+                let file = try File(path: url.absoluteString)
+                guard let content = String(data: try file.read(), encoding: .utf8) else {
+                    let synopsisError = SynopsisError(
+                        description: "Cannot read file content",
+                        file: url
+                    )
+                    errors.append(synopsisError)
+                    continue
+                }
+                guard !content.contains("synopsis:disable") else {
+                    continue
+                }
                 let sourceCodeDictionary = try sourceKittenAdapter.dictionary(forFileAt: url.absoluteString)
                 let sourceCode = SourceKittenSwiftCode(
                     fileURL: url,
