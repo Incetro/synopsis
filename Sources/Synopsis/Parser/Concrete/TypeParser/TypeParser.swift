@@ -76,6 +76,8 @@ final class TypeParser {
     /// - Returns: TypeSpecification instance
     private func parse(rawType: String) -> TypeSpecification {
 
+        let rawType = String(rawType.truncateLeadingWhitespace())
+
         // check type ends with ?
         if rawType.hasSuffix("?") {
             return .optional(
