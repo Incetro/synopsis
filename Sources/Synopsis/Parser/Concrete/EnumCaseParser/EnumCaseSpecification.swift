@@ -102,11 +102,7 @@ extension EnumCaseSpecification: Specification {
         if arguments.isEmpty {
             argumentsStr = ""
         } else {
-            argumentsStr = arguments.reduce("(") { (result: String, argument: ArgumentSpecification) -> String in
-                arguments.last == argument
-                    ? result + argument.verse + ")"
-                    : result + argument.verseWithComma + " "
-            }
+            argumentsStr = "(" + arguments.map(\.verse).joined(separator: ", ") + ")"
         }
 
         return """
