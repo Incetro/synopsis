@@ -251,17 +251,22 @@ extension PropertySpecification: Specification {
 
         let accessibilityStr = accessibility.verse.isEmpty ? "" : "\(accessibility.verse) "
         let kindStr          = kind.verse.isEmpty ? "" : "\(kind.verse) "
+        let accessibilityAndKindStr = (accessibilityStr + kindStr)
+            .replacingOccurrences(
+                of: "\(accessibilityStr)@objc dynamic",
+                with: "@objc dynamic \(accessibilityStr)"
+            )
         let constantStr      = declarationKind.rawValue
         let bodyStr          = body.map { " {\n\($0.unindent)\n}" } ?? ""
         let defaultValueStr  = defaultValue.map { " = \($0)" } ?? ""
 
         if skippingTypeDeclaration, !defaultValueStr.isEmpty {
             return """
-            \(commentStr)\(accessibilityStr)\(kindStr)\(constantStr) \(name)\(defaultValueStr)\(bodyStr)
+            \(commentStr)\(accessibilityAndKindStr)\(constantStr) \(name)\(defaultValueStr)\(bodyStr)
             """
         } else {
             return """
-            \(commentStr)\(accessibilityStr)\(kindStr)\(constantStr) \(name): \(type.verse)\(defaultValueStr)\(bodyStr)
+            \(commentStr)\(accessibilityAndKindStr)\(constantStr) \(name): \(type.verse)\(defaultValueStr)\(bodyStr)
             """
         }
     }
