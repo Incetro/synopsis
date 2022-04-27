@@ -69,6 +69,24 @@ public struct Specifications {
         }
         return consolidated
     }
+
+    // MARK: - Initializers
+
+    public init(
+        enums: [EnumSpecification] = [],
+        protocols: [ProtocolSpecification] = [],
+        structures: [StructureSpecification] = [],
+        classes: [ClassSpecification] = [],
+        functions: [FunctionSpecification] = [],
+        extensions: [ExtensionSpecification] = []
+    ) {
+        self.enums = enums
+        self.protocols = protocols
+        self.structures = structures
+        self.classes = classes
+        self.functions = functions
+        self.extensions = extensions
+    }
 }
 
 // MARK: - Xcode
