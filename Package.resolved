@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Incetro/source-kitten-adapter",
       "state" : {
-        "branch" : "main",
-        "revision" : "5f1c76b39da86764d45b41552ae3e9e56406632b"
+        "revision" : "5f1c76b39da86764d45b41552ae3e9e56406632b",
+        "version" : "0.1.0"
       }
     },
     {
