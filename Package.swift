@@ -20,7 +20,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/jpsim/SourceKitten",
-            from: "0.18.0"
+            from: "0.37.0"
         )
     ],
     targets: [
