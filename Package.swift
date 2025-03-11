@@ -1,10 +1,13 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "Synopsis",
+    platforms: [
+        .macOS(.v12)
+    ],
     products: [
         .library(
             name: "Synopsis",
@@ -16,7 +19,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/Incetro/source-kitten-adapter",
-            from: "0.0.5"
+            branch: "main"
         ),
         .package(
             url: "https://github.com/jpsim/SourceKitten",
